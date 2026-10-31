@@ -1,0 +1,78 @@
+# Builds and publishes the FOH cleaning chart to GitHub Pages whenever main changes.
+#
+# Push to main, and a couple of minutes later every device has it, at
+# https://allendigitaldesign.github.io/FOH-Weekly-Cleaning-Tracker-CFA-West-Adams/
+#
+# Needs one repository secret, VITE_SHEET_URL (the Sheet's /exec web app
+# address), and Settings → Pages → Source set to "GitHub Actions".
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Lets the deploy be re-run from the Actions tab without pushing anything.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Two pushes in quick succession would otherwise race, and whichever finished
+# last would win regardless of which was newer.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Runs the real Apps Script against a pretend Sheet, and checks the task
+      # list in the app matches the one in the script.
+      - name: Test the Sheet script
+        run: npm test
+
+      # Without the Sheet address the build still succeeds - it just quietly
+      # produces demo mode, which would look right on every device while sending
+      # nothing to the Sheet. Fail loudly instead.
+      - name: Refuse to build without the Sheet address
+        env:
+          VITE_SHEET_URL: ${{ secrets.VITE_SHEET_URL }}
+        run: |
+          if [ -z "$VITE_SHEET_URL" ]; then
+            echo "::error::The VITE_SHEET_URL secret is not set (Settings → Secrets and variables → Actions)."
+            echo "::error::Building without it would ship demo mode to the store."
+            exit 1
+          fi
+
+      - name: Build
+        env:
+          VITE_SHEET_URL: ${{ secrets.VITE_SHEET_URL }}
+        run: npm run build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- A little version of the chart: three coloured day headers over a white
+       board, with a ticked box and initials line. Kept inside the middle 80%
+       circle, because the manifest offers the 512 as maskable and Android
+       crops it. -->
+  <rect width="512" height="512" fill="#1D2B4A"/>
+  <rect x="106" y="112" width="300" height="288" rx="30" fill="#FFFFFF"/>
+  <path d="M106 142a30 30 0 0 1 30-30h70v62H106Z" fill="#D7193A"/>
+  <rect x="206" y="112" width="100" height="62" fill="#0E7C6B"/>
+  <path d="M306 112h70a30 30 0 0 1 30 30v32H306Z" fill="#D9740F"/>
+  <!-- box and tick -->
+  <rect x="156" y="232" width="92" height="92" rx="8" fill="none" stroke="#1D2B4A" stroke-width="14"/>
+  <path d="M152 278c14 10 26 26 36 44C210 268 240 228 284 196" fill="none" stroke="#1D2B4A" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- initials line -->
+  <line x1="276" y1="324" x2="360" y2="324" stroke="#1D2B4A" stroke-width="14" stroke-linecap="round"/>
+</svg>
