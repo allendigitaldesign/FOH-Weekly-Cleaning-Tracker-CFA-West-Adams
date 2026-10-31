@@ -38,19 +38,19 @@ var TASKS = [
   ['mon-afternoon', 'Manager station'],
   ['mon-dinner', 'Mobile drinks station'],
 
-  ['tue-breakfast', 'All FOH drains'],
+  ['tue-breakfast', 'Drive Thru Drains'],
   ['tue-lunch', 'Coffee/tea brewer area'],
   ['tue-afternoon', 'DT sauce wall'],
   ['tue-dinner', 'Tea, lemonade, soda tower in DT'],
 
-  ['wed-breakfast', 'Condiment towers'],
-  ['wed-lunch', 'Ice dream machine'],
+  ['wed-breakfast', 'Front Counter Drains'],
+  ['wed-lunch', 'Condiment Towers'],
   ['wed-afternoon', 'Dump sink in drinks'],
   ['wed-dinner', 'Bag holders, condiment towers'],
 
   ['thu-breakfast', 'Both outside doors in DT'],
   ['thu-lunch', 'FC drinks station'],
-  ['thu-afternoon', 'Mop pit area'],
+  ['thu-afternoon', 'Mop It area'],
   ['thu-dinner', 'Scrub under all machines in DT'],
 
   ['fri-breakfast', 'FC register stand'],
